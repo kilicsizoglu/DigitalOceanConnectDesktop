@@ -34,6 +34,7 @@ namespace DigitalOceanConnectDesktop
 
         private async void refreshList() 
         {
+            DropletList.Items.Clear();
             if (dropletManager != null)
             {
                 IReadOnlyList<DigitalOcean.API.Models.Responses.Droplet> droplets = await dropletManager.GetDroplets();
@@ -46,15 +47,18 @@ namespace DigitalOceanConnectDesktop
 
         private void NewButton_Click(object sender, RoutedEventArgs e)
         {
-            DropletCreate dropletCreate = new DropletCreate(key);
-            dropletCreate.Show();
+           if (key != null)
+            {
+                DropletCreate dropletCreate = new DropletCreate(key);
+                dropletCreate.Show();
+            }
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             if (dropletManager != null)
             {
-                dropletManager.DeleteDroplet(Convert.ToInt16(DropletList.SelectedItem.ToString()));
+                dropletManager.DeleteDroplet(Convert.ToInt32(DropletList.SelectedItem.ToString()));
             }
         }
 
